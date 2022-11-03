@@ -73,7 +73,7 @@ func main() {
 
 	s := Secrets{
 		//path: "resources/config.yaml",
-		path: "/vault/secrets/config.yaml",
+		path: "/var/run/secrets/vaultproject.io/config.yaml",
 	}
 	http.HandleFunc("/secrets", s.secretsHandler)
 	http.HandleFunc("/hello", helloHandler)
