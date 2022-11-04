@@ -16,11 +16,11 @@ FLASK_APP = Flask(__name__)
 @FLASK_APP.route('/secret', methods=['GET'])
 def get_secret(secret_file_path='resources/application.txt'):
     """ prints secret data as read from specified file """
-
-    if not os.path.exists(os.path.join(APP_ROOT, secret_file_path)):
+    config_location = os.environ.get('PYTHON3_CONFIG_LOCATION')
+    if not os.path.exists(config_location):
         return json.dumps({'File not found': False}), 404
 
-    with open(os.path.join(APP_ROOT, secret_file_path)) as f:
+    with open(config_location) as f:
         return f.read()
 
 @FLASK_APP.route('/healthz', methods=['GET'])
