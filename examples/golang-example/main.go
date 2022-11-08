@@ -11,10 +11,10 @@ import (
 )
 
 type Config struct {
-	Secret string `yaml:"secret"`
+	AppConfig string `yaml:"app_name"`
 }
 
-type Secrets struct {
+type AppConfig struct {
 	path string
 }
 
@@ -29,7 +29,7 @@ func init() {
 	log.SetLevel(log.InfoLevel)
 }
 
-func (s *Secrets) secretsHandler(w http.ResponseWriter, req *http.Request) {
+func (s *AppConfig) configHandler(w http.ResponseWriter, req *http.Request) {
 
 	yamlFile, err := ioutil.ReadFile((*s).path)
 	if err != nil {
@@ -47,7 +47,7 @@ func (s *Secrets) secretsHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	w.Write([]byte("The secret is: " + config.Secret))
+	w.Write([]byte("The secret is: " + config.AppConfig))
 	log.Info(req.Method + req.RequestURI + " " + req.Proto)
 }
 
@@ -71,12 +71,12 @@ func main() {
 
 	port := ":8080"
 
-	s := Secrets{
+	s := AppConfig{
 		//path: "resources/config.yaml",
 		//path: "/var/run/secrets/vaultproject.io/config.yaml",
 		path: os.Getenv("APP_CONFIG_PATH"),
 	}
-	http.HandleFunc("/secrets", s.secretsHandler)
+	http.HandleFunc("/config", s.configHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/headers", headersHandler)
 
