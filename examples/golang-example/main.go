@@ -11,7 +11,7 @@ import (
 )
 
 type Config struct {
-	AppConfig string `yaml:"app_name"`
+	AppConfig string `yaml:"appname"`
 }
 
 type AppConfig struct {
@@ -30,6 +30,8 @@ func init() {
 }
 
 func (s *AppConfig) configHandler(w http.ResponseWriter, req *http.Request) {
+	
+	log.info("Config Path is: (*s).path)
 
 	yamlFile, err := ioutil.ReadFile((*s).path)
 	if err != nil {
@@ -46,8 +48,9 @@ func (s *AppConfig) configHandler(w http.ResponseWriter, req *http.Request) {
 		log.Error(err.Error())
 		return
 	}
+        log.info("The config is: " + config.AppConfig)
 
-	w.Write([]byte("The secret is: " + config.AppConfig))
+	w.Write([]byte("The config is: " + config.AppConfig))
 	log.Info(req.Method + req.RequestURI + " " + req.Proto)
 }
 
