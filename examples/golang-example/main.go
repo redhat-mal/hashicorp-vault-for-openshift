@@ -83,6 +83,6 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/headers", headersHandler)
 
-	log.Info("Listening on port ", port)
+	log.Info("Now Listening on port ", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }
