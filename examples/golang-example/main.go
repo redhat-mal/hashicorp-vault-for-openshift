@@ -31,7 +31,7 @@ func init() {
 
 func (s *AppConfig) configHandler(w http.ResponseWriter, req *http.Request) {
 	
-	log.info("Config Path is: (*s).path)
+	log.info("Config Path is:" + (*s).path)
 
 	yamlFile, err := ioutil.ReadFile((*s).path)
 	if err != nil {
